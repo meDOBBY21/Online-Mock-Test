@@ -1,0 +1,31 @@
+.login-body{
+    height:90vh ;
+}
+
+.light{
+    background-image: url("img/white.png");
+    background-size:cover; 
+    background-repeat: no-repeat;
+}
+.dark{
+    background-image: url("img/dark.png");
+    background-size:cover; 
+    background-repeat: no-repeat;
+}
+  
+
+.card{
+    width: 45%;
+}    
+
+.approve_reject_edit{
+    width: 100px;
+}
+
+/* #my-row{
+    margin-left: 10%;
+} */
+
+.results{
+    background-color: rgba(225, 225, 225, .6);
+}
