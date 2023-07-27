@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Teacher|Edit</title>
+{% endblock %}
+
+{% block content %}
+        <form method="post" class="d-flex flex-column" >
+          {% csrf_token %}
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text bg-primary bg-gradient text-white" id="addon-wrapping">Q</span>
+            {{form.question}}
+          </div>
+          <div class="input-group flex-nowrap">
+            <span class="input-group-text bg-primary bg-gradient text-white" id="addon-wrapping">Marks</span>
+            {{form.marks}}
+        </div>
+          {{ formset.management_form }}
+          <div class="d-flex">
+          <table >
+            {% for form in formset.forms %}
+            {{ form.as_table }}
+            {% endfor %}
+          </table>
+        </div>
+          <button class="btn btn-danger ms-auto" type="submit">Save</button>
+        </form>
+        <a onclick="window.location.replace(document.referrer)" class="btn btn-danger">Back</a>
+{% endblock %}

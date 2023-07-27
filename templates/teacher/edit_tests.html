@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Test Edit</title>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column">
+    <a href="{% url 'home' %}" class="btn btn-danger sticky-top ms-auto">Back</a>
+    <div class="row">
+        {% for test in tests %}
+        <div class="card text-bg-{{user.theme}} m-3 p-0">
+            <div style="width: 100%;height: 100px;" class="text-bg-info bg-gradient border-{{user.theme}} rounded-top">
+
+            </div>
+            <div class="card-body d-flex flex-column">
+                <div>
+                    <div class="row">
+                        <h5 class="col card-title">{{test.name}}</h5>
+                        <h3 class="col m-auto">{{test.topic}}</h3>
+                    </div>
+                    <p class="card-text">Test Duration: {{test.test_time}} mins.</p>
+                    <div class="row">
+                        <div class="col">Test Time: </div>
+                        <div id="start-box" class="col">{{test.time}}</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex mt-auto">
+                    <a href="{% url 'test_results' test_id=test.id %}" class="btn btn-warning bg-gradient">Results</a>
+                    <div class="ms-auto">
+                        <a href="{% url 'remove_test' test_id=test.id %}" class="btn btn-danger bg-gradient">Remove</a>
+                        <a href="{% url 'preview' test_id=test.id %}" class="btn btn-info bg-gradient ms-3">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

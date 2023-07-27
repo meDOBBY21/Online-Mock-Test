@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Teacher|View Questions</title>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex" >
+    <div class="m-4 p-2" {% if user.theme == 'dark' %}style="background-color: rgba(0,0,0,.75); width: 1000px;"{% else %}style="background-color: rgba(225,225,225,.75); width: 1000px;"{% endif%}>
+        <div class="sticky-top d-flex text-bg-{{user.theme}} p-2 border-{{user.theme}} rounded m-0">
+            <h3>
+                <span>Questions in </span>
+                {% for subject in topics %}
+                <span>{{subject}} </span>
+                {% endfor %}
+            </h3>
+            <form method="get" class="ms-auto">
+                {{form.as_p}}
+                <input type="submit" class="btn btn-primary" value="Filter">
+            </form>
+        </div>
+        <div class="overflow-y-auto">
+            {% if questions %}
+            {% for question in questions %}
+            {{question.question}}
+            {% for choice in question.choice_set.all %}
+            <br>
+            <input type="checkbox" value="{{choice.is_correct}}" class="form-check-input" {% if choice.is_correct %}checked{% endif %} disabled >
+            <span>{{choice.choice}}</span>
+            {% endfor%}
+            <hr>
+            {% endfor%}
+            {% else %}
+            <h3>Sorry No questions are avalaible in this subject.</h3>
+            {% endif %}
+        </div>
+    </div>
+    <div class="sticky-top ms-auto">
+        <a href="{% url 'home' %}"class="btn btn-danger">Back</a>   
+    </div>
+</div>
+{% endblock %}

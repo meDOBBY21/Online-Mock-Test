@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Test|Confirmation</title>
+{% endblock %}
+
+{% block content %}
+<div class="position-relative" style="height: 300px;">
+    <div class="position-absolute top-50 start-50 translate-middle">
+        <form method="get">
+            {{form.as_p}}
+            <!-- <div class="d-flex">
+                <div class="form-group col-md-6">
+                    <label for="difficulty">Difficulty Level</label>
+                    <select class="form-control" id="difficulty" name="difficulty">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+                <div class="vr m-3 text-bg-{{user.theme}}"></div>
+                <div class="form-group col-md-6">
+                    <label for="questions">Number of Questions</label>
+                    <input class="form-control" type="text" id="questions" name="questions" value=10>
+                </div>
+            </div> -->
+            <button type="submit" class="btn btn-primary mt-2">Filter</button>
+        </form>
+        {% if msg == 1 %}
+        <h3>Your Test is Ready</h3>
+        <hr>
+        <a class="btn btn-warning bg-gradient" href="{% url 'test' test_id=test_id %}">Take Test</a>
+        {% else %}
+        <h3>Sorry,We Do not have questions in this topic.</h3>
+        <hr>
+        <p>You can contribute to this topic if you want to help others.</p>
+        <a class="btn btn-warning bg-gradient" href="{% url 'semester' %}">Contribute</a>
+        {% endif %}
+        <a class="btn btn-warning bg-gradient" href="{% url 'home' %}">Leave</a>
+    </div>
+</div>
+{% endblock %}

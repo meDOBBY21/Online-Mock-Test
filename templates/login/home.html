@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="row my-row">
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Take Test</h5>
+                <p class="card-text">Test your Knowlege in the specific topic.</p>
+            </div>
+            <div>
+                <hr>
+                <a href="/test" class="btn btn-danger bg-gradient">Start Test</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Give Questions</h5>
+                <p class="card-text">Give challenging questions which others can answer.</p>
+            </div>
+            <div class="">
+                <hr>
+                <a href="/takedata" class="btn btn-warning bg-gradient">Contribute </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Tests</h5>
+                <p class="card-text">Tecahers have uploaded few tests to test your skills. Answer the tests.</p>
+            </div>
+            <div class="">
+                <hr>
+                <a href="test/teachertest" class="btn btn-secondary bg-gradient">Teacher Tests</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">My Tests</h5>
+                <p class="card-text">Check your previous test and inprove on the topics where you went wrong.</p>
+            </div>
+            <div class="">
+                <hr>
+                <a href="{% url 'old_tests' %}" class="btn btn-info bg-gradient">Review</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

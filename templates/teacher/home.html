@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+<title>Teacher|Home</title>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Approve Questions</h5>
+                <p class="card-text">
+                    Students entered few questions to contribute to this application few might have errors
+                    ann few might be wrong.Approve or Reject or Correct the questions accordingly.
+                </p>
+            </div>
+            <div class="mt-auto">
+                <hr>
+                <a href="{% url 'review' %}" class="btn btn-danger bg-gradient">Check Questions</a>
+            </div>
+        </div>
+    </div>
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Give Questions</h5>
+                <p class="card-text">
+                    Students are eager to study.Give some challenging questions so Students can practice.
+                </p>
+            </div>
+            <div class="mt-auto">
+                <hr>
+                <a href="{% url 'subject' semester=0 %}" class="btn btn-warning bg-gradient">Contribute </a>
+            </div>
+        </div>
+    </div>
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Test Students</h5>
+                <p class="card-text">
+                    Test students on a regular basis.Upload tests and prepare students for exams.
+                </p>
+            </div>
+            <div class="mt-auto">
+                <hr>
+                <a href="teacher/test_entry" class="btn btn-secondary bg-gradient">Upload Test</a>
+            </div>
+        </div>
+    </div>
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Uploaded Tests</h5>
+                <p class="card-text">
+                    All the tests you Uploaded till now are here if you want to edit them or see the results of the student in that test you can view here.
+                </p>
+            </div>
+            <div class="mt-auto">
+                <hr>
+                <a href="teacher/edit_tests" class="btn btn-success bg-gradient">Check/Edit</a>
+            </div>
+        </div>
+    </div>
+    <div class="card bg-{{user.theme}} m-3 p-0">
+        <div class="card-body d-flex flex-column">
+            <div>
+                <h5 class="card-title">Questions</h5>
+                <p class="card-text">
+                    All the Questions in Your respective Subjects are here.You can check them out.
+                </p>
+            </div>
+            <div class="mt-auto">
+                <hr>
+                <a href="teacher/questions" class="btn btn-success bg-gradient">Questions</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

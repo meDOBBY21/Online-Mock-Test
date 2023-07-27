@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Test|Topic</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col mt-5">
+        <div class="form-group">
+            <span>Want to take full test on {{subject}}.</span>
+            <span><a class="btn btn-warning" href="{% url 'confirm' semester=semester subject=subject topic='all' %}">Take
+                    Test</a></span>
+            <hr>
+            <div class="form-group">
+                <h4>Select the topics on which you want to Take Text.</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {% for topic in topics %}
+                    <div class="col w-50">
+                        <div class="input-group mb-3 border border-secondary-subtle rounded">
+                            <div class="input-group-text">
+                                <input type='checkbox' name="topic" class="form-check-input mt-0" value="{{topic.topic}}" id="{{topic.topic}}">
+                            </div>
+                            <label class="form-check-label m-1" for="{{topic.topic}}" class="form-control">
+                                    {{topic.topic}}
+                            </label>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- <select class="form-select mt-3" name="topic" onchange="location = this.value">
+                        <option selected>Topic</option>
+                        {% for topic in topics %}
+                        <option value="{% url 'confirm' semester=semester subject=subject topic=topic %}">{{topic.topic}}
+                        </option>
+                        {%endfor%}
+                    </select> -->
+                    <div class="d-flex">   
+                    <a href="{% url 'test_subject' semester=semester %}" class="btn btn-danger">Back</a>
+                    <input type="submit" value="Take Test" class="btn btn-warning ms-auto">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Test|Results</title>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+    <div class="text-bg-{{user.theme}} p-3 border-{{user.theme}} rounded w-50">
+        <h3>Test Details</h3>
+        <hr>
+        <table class="table text-bg-{{user.theme}}">
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>{{test.name}}</td>
+                </tr>
+                <tr>
+                    <th>Time</th>
+                    <td>{{test.time}}</td>
+                </tr>
+                <tr>
+                    <th>Duration</th>
+                    <td>{{test.test_time}} Mins.</td>
+                </tr>
+                <tr>
+                    <th>Subject</th>
+                    <td>{{test.topic}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button class="btn btn-danger m-2" onclick="window.location.replace(document.referrer)">Back</button>
+    </div>
+</div>
+<div>
+    <table class="table table-striped-columns table-{{user.theme}} border-secondary">
+        <thead>
+            <th>#</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th> </th>
+        </thead>
+        <tbody>
+            {% for student,score in students.items %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{student}}</td>
+                <td>{{score}}</td>
+                <td><a href="{% url 'check_answers' test_id=test.id username=student %}" class="btn btn-primary">See
+                        Results</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

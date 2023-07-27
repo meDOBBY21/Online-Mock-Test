@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Test|Subject</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col mt-5 pt-5">
+        <div class="form-group">
+            <span>Want to take test for full semester.</span>
+            <span><a class="btn btn-warning" href="{% url 'confirm' semester=semester subject='all' topic='all' %}">Take Test</a></span>
+            <form>
+                <select class="form-select mt-3" name="subject" onchange="location = this.value">
+                    <option selected>Subject</option>
+                    {% for subject in subjects %}
+                    <option value="{% url 'test_topic' semester=semester.semester subject=subject.subject %}">{{subject.subject}}</option>
+                    {%endfor%}
+                </select>
+            </form>
+            <a class="btn btn-danger mt-5" href="{% url 'test_semester' %}">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

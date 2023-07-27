@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Test Entry</title>
+{% endblock %}
+
+{% load bootstrap4 %}
+{% block content %}
+<form method="post" id="question-forms">
+    {% csrf_token %}
+    <p class="text-bg-{{user.theme}} p-3 border-{{user.theme}} rounded">
+        <strong>Note:</strong>
+        <br>
+        Please enter "Test Duration" in minutes.
+        <br>
+        Enter Date in "YYYY-MM-DD" Format
+    </p>
+
+    {{test.media}}  
+    {{test.as_p}}
+
+    <div class="d-flex">
+        <div class="">
+            <a href="{% url 'home'%}" class="btn btn-danger">Back</a>
+        </div>
+        <div class="ms-auto">
+            <input type="submit" value="Add Question" class="btn btn-danger">
+        </div>
+    </div>
+</form>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<link rel="stylesheet" href="{% static '/admin/css/widgets.css' %}">
+<script src="{% static '/admin/js/core.js' %}"></script>
+<script src="{% url 'js-catlog' %}"></script>
+{% endblock %}

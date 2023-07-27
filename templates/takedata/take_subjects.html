@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+
+<div class="position-absolute top-50 start-50 translate-middle">
+	<h1>Subject details</h1>
+	<hr>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		{{form.as_p}}
+		<button type="submit" class="btn btn-danger">Upload</button>
+	</form>
+</div>
+{% endblock %}

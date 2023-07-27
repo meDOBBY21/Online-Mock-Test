@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Entry|Topic</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col mt-5 pt-5">
+        <div class="form-group">
+                <select class="form-select" name="semester" onchange="location = this.value">
+                    <option selected>Topic</option>
+                    {% for topic in topics %}
+                    <option value="{% url 'question_type' semester=semester subject=subject topic=topic %}">{{topic.topic}}</option>
+                    {%endfor%}
+                </select>
+            <a href="{% url 'subject' semester=semester %}" class="btn btn-danger mt-5">Back</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

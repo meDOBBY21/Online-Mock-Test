@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="position-absolute start-50 top-50 translate-middle">
+    <h2>Data Entry</h2>
+    <hr>
+    <a class="btn btn-warning" href="{% url 'read_subject_data' %}">Subject Data</a>
+    <a class="btn btn-warning" href="{% url 'read_topic_data' %}">Topic Data</a>
+    <hr>
+    <a class="btn btn-danger" href="/admin">Go back to admin page</a>
+</div>
+{% endblock %}

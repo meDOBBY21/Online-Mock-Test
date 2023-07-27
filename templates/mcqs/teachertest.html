@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for test in tests %}
+        <a href="{% url 'test' test_id=test %}">{{test}}</a>
+    {% endfor %}
+{% endblock %}

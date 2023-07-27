@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+<title>Test</title>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+{% block content %}
+<div class="container bg-{{user.theme}} position-absolute start-50 top-50 translate-middle p-3 border rounded">
+    <form method="post" action="{% url 'check_answers' test_id=test_id username=user.username %}" id="myForm" class="d-flex flex-column">
+        {% csrf_token %}
+        <div id="carouselExampleIndicators" class="carousel slide d-flex" style="user-select: none;">
+            <div class="carousel-inner w-75 me-1">
+                {% for question in questions %}
+                {% if forloop.counter != 1 %}
+                <div class="carousel-item col p-4 overflow-auto">
+                    <strong class="d-flex ">
+                        <p>{{forloop.counter}} . </p>
+                        <p>{{question.question|linebreaks }}</p>
+                    </strong>
+                    {% if question.type == "Fill in the Blanks" %}
+                    <input type="text" class="form-test-input" name="choice_{{question.id}}">
+                    {% else %}
+                    {% for choice in question.choice_set.all %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="choice_{{question.id}}"
+                            value="{{choice.choice}}" id="choice_{{question.id}}_{{choice.id}}">
+                        <label class="form-check-label" for="choice_{{question.id}}_{{choice.id}}">
+                            {{choice.choice}}
+                        </label>
+                    </div>
+
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {%else%}
+                <div class="carousel-item active col p-4 overflow-auto">
+                    <strong class="d-flex">
+                        <p>{{forloop.counter}} . </p>
+                        <p> {{question.question|linebreaks }}</p>
+                    </strong>
+                    {% if question.type == "Fill in the Blanks" %}
+                    <input type="text" class="form-test-input" name="choice_{{question.id}}">
+                    {% else %}
+                    {% for choice in question.choice_set.all %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="choice_{{question.id}}"
+                            value="{{choice.choice}}" id="choice_{{question.id}}_{{choice.id}}">
+                        <label class="form-check-label" for="choice_{{question.id}}_{{choice.id}}">
+                            {{choice.choice}}
+                        </label>
+                    </div>
+
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {%endif%}
+                {% endfor %}
+            </div>
+            <div class="vr"></div>
+            <div class="flex-shrink-1 col m-5 overflow-auto">
+                <div id="endtime-box" class="visually-hidden">{{duration}}</div>
+                <div class="fw-bold">
+                    <span class="text-primary">Time Left:</span>
+                    <span id="countdown-box"></span>
+                </div>
+                <hr class="text-bg-{{user.theme}}">
+                {% for question in questions %}
+                {% if forloop.counter != 1%}
+                <button type="button" class="btn border-secondary text-bg-{{user.theme}}  m-1"
+                    data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{forloop.counter|add:" -1"}}"
+                    aria-label="Slide {{forloop.counter}}">{{forloop.counter}}</button>
+                {% else %}
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                    class="btn border-secondary text-bg-{{user.theme}} m-1" aria-current="true"
+                    aria-label="Slide 1">{{forloop.counter}}</button>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="d-flex w-75 mt-auto">
+            <div class="">
+                <button class="btn btn-warning" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    Previous
+                </button>
+            </div>
+            <div class="ms-auto">
+                <button class="btn btn-warning" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    Next
+                </button>
+            </div>
+        </div>
+        
+        <div class="d-flex flex-row-reverse">
+            <button value="submit" name="Submit" id='submit-btn' class="btn btn-danger mt-3 ">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    console.log("hi")
+    window.onload = function () {
+        const endtimeBox = document.getElementById("endtime-box")
+        const countdownBox = document.getElementById('countdown-box')
+        const myForm = document.getElementById('myForm')
+        const submit = document.getElementById('submit-btn')
+        const endTime = parseInt(endtimeBox.textContent)
+        console.log(endtimeBox)
+        let end = new Date().getTime() + endTime
+
+        const storedEnd = localStorage.getItem('end')
+
+        if (storedEnd) {
+            end = parseInt(storedEnd, 10)
+        } else {
+            localStorage.setItem('end', end)
+        }
+        setInterval(() => {
+            const now = new Date().getTime()
+            const diff = end - now
+            console.log(diff)
+            const h = Math.floor(end / (1000 * 60 * 60) - now / (1000 * 60 * 60))
+            const m = Math.floor((end / (1000 * 60) - now / (1000 * 60)) % 60)
+            const s = Math.floor((end / 1000 - now / 1000) % 60)
+
+            if (diff > 0) {
+                countdownBox.innerHTML = h + " : " + m + " : " + s
+            }
+            else {
+                myForm.submit()
+                localStorage.removeItem('end')
+            }
+        }, 1000)
+        submit.addEventListener('click', function () {
+            myForm.submit();
+            localStorage.removeItem('end');
+        })
+    };
+</script>
+{% endblock %}

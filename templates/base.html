@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+	{% block head %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% block title %}
+	<title>MCQs</title>
+	{% endblock %}
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/style.css' %}" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" href="{% static 'img/favicon_io(5)/favicon.ico' %}">
+	{% block script %}
+	<script src="{% static 'js/bootstrap.bundle.min.js' %}"
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+		crossorigin="anonymous"></script>
+	{% endblock %}
+	{% endblock %}
+</head>
+
+<body {% if user.theme == "white" %}class="text-bg-white light" {% else %}class="text-bg-dark dark" {% endif %}>
+	{% block navbar %}
+	<nav class="navbar p-1">
+		<div class="container-fluid">
+			{% if user.theme == 'white' %}
+			<a href="/home"><img class="navbar-brand " src="{% static 'img/white.png' %}" alt="logo" width="175"></a>
+			{% else %}
+			<a href="/home"><img class="navbar-brand " src="{% static 'img/dark.png' %}" alt="logo" width="175"></a>
+			{% endif %}
+			<div class="btn-group dropstart">
+				<button type="button" class="btn text-bg-{{user.theme}} dropdown-toggle" data-bs-toggle="dropdown"
+					aria-expanded="false">
+					{{user.username}} - {{user.name}}
+				</button>
+				<ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="{% url 'leaderboard' %}">Leaderboard</a></li>
+					<li><a class="dropdown-item" href="{% url 'password_change'%}">Change Password</a></li>
+					{% if user.theme == 'white' %}
+					<li><a class="dropdown-item" href="{% url 'change_theme' %}">Dark theme</a></li>
+					{% else %}
+					<li><a class="dropdown-item" href="{% url 'change_theme' %}">Light Theme</a></li>
+					{% endif %}
+					<li><a class="dropdown-item" href="/logout">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	{% endblock %}
+	<div class="p-2 overflow-y-auto overflow-x-hidden" style="height: 540px;">
+		{% block content %}
+		{% endblock %}
+		{% block bodyscript %}
+		{% endblock %}
+	</div>
+
+	</div>
+</body>
+
+</html>

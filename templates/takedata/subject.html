@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Entry|Subject</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="col mt-5 pt-5">
+        <div class="form-group">
+                <select class="form-select" name="subject" onchange="location = this.value">
+                    <option selected>Subject</option>
+                    {% for subject in subjects %}
+                    <option value="{% url 'topic' semester=subject.semester subject=subject.subject %}">{{subject.subject}}</option>
+                    {%endfor%}
+                </select>
+            <a onclick="window.location.replace(document.referrer)" class="btn btn-danger mt-5">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %}
+<title>Test Entry|Question</title>
+{% endblock %}
+
+{% block content %}
+<div class="position-absolute top-50 start-50 translate-middle p-5">
+    <form method="get" class="d-flex m-3">
+        {{typeform.media}}
+        {{typeform.as_p}}
+        <input type="submit" class="btn btn-primary ms-2" value="Submit">
+    </form>
+    <hr>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Add Question
+    </button>
+    <a href="{% url 'preview' test_id=test_id %}" class="btn btn-warning">Preview</a>
+</div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>NOTE:Please do tick the correct answer.</p>
+                <form method="post" id="question-forms">
+                    {% csrf_token %}
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text bg-primary bg-gradient text-white" id="addon-wrapping">Q</span>
+                        {{form.question}}
+                    </div>
+                    <br>
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text bg-primary bg-gradient text-white" id="addon-wrapping">Marks</span>
+                        {{form.marks}}
+                    </div>
+                    <br>
+                    {{ formset.management_form }}
+                    {% for choice_form in formset %}
+                    <div class="col w-50">
+                        <div class="input-group mb-3">
+                            <div class="input-group-text">
+                                {{choice_form.is_correct}}
+                            </div>
+                            {{choice_form.choice }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="modal-footer">
+                        <div class="">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        <div class="ms-auto">
+                            <input type="submit" name="submit" value="Add Question" class="btn btn-danger">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

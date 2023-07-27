@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}
+<title>Test Entry|Preview</title>
+{% endblock %}
+
+{% block content %}
+
+<form method="post" style="height: 75vh;">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col">
+            {{form.media}}
+            {{form.as_p}}
+        </div>
+        <div class="col">
+            <a onclick="window.location.replace(document.referrer)" class="btn btn-danger">Back</a>
+        </div>
+    </div>
+
+    <div class="overflow-y-auto text-bg-{{user.theme}}">
+        <table class="table text-bg-{{user.theme}} border-{{user.theme}} rounded p-2 m-1">
+            <thead>
+                <tr>
+                    <th scope="col">Question</th>
+                    <th scope="col">Choices</th>
+                    <th scope="col"> </th>
+                </tr>
+            </thead>
+            {% for question in questions %}
+            <tbody>
+                <tr>
+                    <td class="mb-3">
+                        <p>{{question|linebreaks}}</p>
+                    </td>
+                    <td class="pt-2">
+                        {% for choice in question.choice_set.all %}
+                        {% if choice.is_correct %}
+                        <span>
+                            <p class="text-success fw-bold ms-4 mb-0">{{choice}}</p>
+                        </span>
+                        {% else %}
+                        <span>
+                            <p class="ms-4 mb-0">{{choice}}</p>
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="approve_reject_edit">
+                        <input type="submit" class="btn btn-danger" name="{{question.id}}_accept_reject" value="Remove"
+                            onclick="alert('Question is Rejected')">
+                        <input type="submit" class="btn btn-warning mt-2" name="{{question.id}}_accept_reject"
+                            value="Edit">
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="d-flex mt-2 mb-3">
+        <a href="{% url 'questions_entry' test_id=test.id topic=test.topic %}" class="btn btn-warning">Add Question</a>
+        <a href="{% url 'home' %}" onclick="alert('Test Uploaded Successfully.')"
+            class="btn btn-danger ms-auto">Upload</a>
+    </div>
+</form>
+{% endblock %}
+{% block script %}
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<link rel="stylesheet" href="{% static '/admin/css/widgets.css' %}">
+<script src="{% static '/admin/js/core.js' %}"></script>
+<script src="{% url 'js-catlog' %}"></script>
+{% endblock %}
